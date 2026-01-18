@@ -1,184 +1,91 @@
-
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Голосование</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .container {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .options {
-            margin: 20px 0;
-        }
-        .option {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #eee;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-        }
-        .option input {
-            margin-right: 10px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .results {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-        }
-        .result-item {
-            margin: 10px 0;
-            padding: 8px;
-            background-color: #e9ecef;
-            border-radius: 4px;
-            opacity: 1;
-            transition: opacity 0.3s ease;
-        }
-        /* Плавное появление при обновлении */
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Голосование</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; background: #f5f5f5; }
+    .c { max-width: 600px; margin: 20px auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    h1 { text-align: center; margin: 0 0 20px; color: #2c3e50; font-size: 1.8em; }
+    .opts { margin: 20px 0; }
+    .opt { display: flex; align-items: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 10px; }
+    .opt:hover { background: #f8f9fa; }
+    .opt input { margin-right: 15px; width: 20px; height: 20px; }
+    button { display: block; width: 100%; padding: 15px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1em; margin: 20px 0; }
+    button:hover { background: #0056b3; }
+    .res { margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; }
+    .res h3 { margin-bottom: 15px; color: #495057; font-size: 1.2em; }
+    .item { padding: 12px 15px; background: #e9ecef; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+    
+    @media (max-width:768px) {
+      .c { margin: 10px; padding: 15px; }
+      h1 { font-size: 1.5em; }
+      .opt { padding: 12px; }
+      button { padding: 12px; font-size: 1em; }
+      .res { padding: 15px; }
+      .res h3 { font-size: 1.1em; }
+      .item { padding: 10px; }
+    }
+
+    @media (max-width:480px) {
+      .c { margin: 5px; padding: 10px; }
+      h1 { font-size: 1.3em; margin-bottom: 15px; }
+      .opt { flex-direction: column; align-items: flex-start; }
+      .opt input { margin: 0 0 8px 0; }
+      button { font-size: 0.95em; padding: 10px; }
+      .res h3 { font-size: 1em; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Опрос: Какой ваш любимый цвет?</h1>
-        
-        <div class="options">
-            <div class="option">
-                <input type="radio" id="red" name="color" value="red">
-                <label for="red">Красный</label>
-            </div>
-            <div class="option">
-                <input type="radio" id="blue" name="color" value="blue">
-                <label for="blue">Синий</label>
-            </div>
-            <div class="option">
-                <input type="radio" id="green" name="color" value="green">
-                <label for="green">Зелёный</label>
-            </div>
-            <div class="option">
-                <input type="radio" id="yellow" name="color" value="yellow">
-                <label for="yellow">Жёлтый</label>
-            </div>
-        </div>
-        
-        <button onclick="submitVote()">Проголосовать</button>
-        
-        <div class="results" id="results">
-            <h3>Результаты голосования:</h3>
-            <div id="result-list"></div>
-        </div>
+  <div class="c">
+    <h1>Опрос: Какой ваш любимый цвет?</h1>
+    <div class="opts">
+      <div class="opt"><input type="radio" name="c" value="r" id="r"><label for="r">Красный</label></div>
+      <div class="opt"><input type="radio" name="c" value="b" id="b"><label for="b">Синий</label></div>
+      <div class="opt"><input type="radio" name="c" value="g" id="g"><label for="g">Зелёный</label></div>
+      <div class="opt"><input type="radio" name="c" value="y" id="y"><label for="y">Жёлтый</label></div>
     </div>
+    <button onclick="v()">Проголосовать</button>
+    <div class="res">
+      <h3>Результаты голосования:</h3>
+      <div id="l"></div>
+    </div>
+  </div>
 
-    <script>
-        // Инициализация данных голосования
-        const votes = JSON.parse(localStorage.getItem('votes')) || {
-            red: 0,
-            blue: 0,
-            green: 0,
-            yellow: 0
-        };
+  <script>
+    const vts = JSON.parse(localStorage.getItem('v')) || {r:0,b:0,g:0,y:0};
+    let cr = {...vts};
 
-        // Текущее состояние результатов (для сравнения при обновлении)
-        let currentResults = { ...votes };
+    function d() {
+      const l = document.getElementById('l');
+      if (!Object.keys(vts).some(k => vts[k] !== cr[k])) return;
+      cr = {...vts};
+      l.innerHTML = '';
+      Object.entries(vts).forEach(([k,v]) => {
+        const n = {'r':'Красный','b':'Синий','g':'Зелёный','y':'Жёлтый'}[k];
+        l.innerHTML += `<div class="item"><span>${n}</span><span><strong>${v}</strong> голосов</span></div>`;
+      });
+    }
 
-        // Функция для отображения результатов
-        function displayResults() {
-            const resultList = document.getElementById('result-list');
-            
-            // Проверяем, изменились ли данные
-            const hasChanges = Object.keys(votes).some(key => votes[key] !== currentResults[key]);
-            
-            if (!hasChanges) return; // Если нет изменений — не обновляем
-            
-            // Обновляем текущее состояние
-            currentResults = { ...votes };
-            
-            // Очищаем контейнер
-            resultList.innerHTML = '';
-            
-            for (const [color, count] of Object.entries(votes)) {
-                const item = document.createElement('div');
-                item.className = 'result-item fade-in';
-                
-                let colorName = '';
-                switch(color) {
-                    case 'red': colorName = 'Красный'; break;
-                    case 'blue': colorName = 'Синий'; break;
-                    case 'green': colorName = 'Зелёный'; break;
-                    case 'yellow': colorName = 'Жёлтый'; break;
-                }
-                
-                item.textContent = `${colorName}: ${count} голосов`;
-                resultList.appendChild(item);
-            }
-        }
+    function v() {
+      const s = document.querySelector('input[name="c"]:checked');
+      if (!s) { alert('Выберите вариант!'); return; }
+      vts[s.value]++;
+      localStorage.setItem('v', JSON.stringify(vts));
+      d();
+      alert('Голос учтен!');
+    }
 
-        // Функция для отправки голоса
-        function submitVote() {
-            const selectedOption = document.querySelector('input[name="color"]:checked');
-            
-            if (!selectedOption) {
-                alert('Пожалуйста, выберите вариант!');
-                return;
-            }
-            
-            const choice = selectedOption.value;
-            votes[choice]++;
-            
-            // Сохраняем в локальное хранилище
-            localStorage.setItem('votes', JSON.stringify(votes));
-            
-            // Сразу обновляем интерфейс
-            displayResults();
-            
-            alert('Ваш голос учтен!');
-        }
+    setInterval(() => {
+      const s = JSON.parse(localStorage.getItem('v'));
+      if (s) Object.assign(vts, s);
+      d();
+    }, 1000);
 
-        // Автоматическое обновление каждую секунду
-        setInterval(() => {
-            // Перечитываем данные из localStorage (на случай, если они изменились в другой вкладке/окне)
-            const storedVotes = JSON.parse(localStorage.getItem('votes'));
-            if (storedVotes) {
-                Object.assign(votes, storedVotes);
-            }
-            displayResults();
-        }, 1000);
-
-        // При загрузке страницы показываем текущие результаты
-        window.onload = displayResults;
-    </script>
+    window.onload = d;
+  </script>
 </body>
 </html>
